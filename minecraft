@@ -1,0 +1,42 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start Miencraft at boot time.
+# Description:       Runs minecraft
+### END INIT INFO
+$USERNAME="minecraft"
+
+ME=`whoami`
+as_user() {
+	if [ $ME == $USERNAME ] ; then
+		bash -c "$1"
+	else
+		su $USERNAME -s /bin/bash -c "$1"
+	fi
+}
+
+loadconfig() {
+if [ -f "/etc/profile.d/minecraft" ]; then
+        source "/etc/profile.d/minecraft"
+fi
+
+
+
+
+
+case "$1" in
+  start)
+    mc_start
+    ;;
+  stop)
+    mc_stop
+    ;;
+  *)
+    echo "Usage /etc/init.d/minecraft {"
+    ;;
+
+
